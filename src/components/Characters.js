@@ -10,8 +10,6 @@ const [data, setData] = useState([])
   const [lastPage, setLastPage] = useState("")
   const [showModal, setShowModal] = useState(false);
   const [status, setStatus]= useState("");
-  const [showError, setShowError] = useState(false);
-
   
 
 
@@ -38,12 +36,7 @@ const [data, setData] = useState([])
         setLastPage(res.info.next)
         setData(res.results)
         setisLoading(false)
-      }
-        else{
-            setShowError(true)
-            
-        }
-    }
+      }}
         );
   }
 
@@ -128,21 +121,8 @@ const [data, setData] = useState([])
             <Text onPress={() => rerender()}>Render</Text>
             </View>
             </View>
-        </Modal>
-        <View>
-                    <Modal transparent={true} visible={showError} animationType="slide">
-                    <View style={styles.modalContainer}>
-                    <View style={styles.modalCard}>
-                    <Text> No se encontró coincidencia  </Text>
-                    
-                    <Text onPress={() => setShowError(false)}>Cerrar</Text>
-                    
-                    </View> </View>
-                    </Modal>
-                </View>
-                  
+        </Modal>      
               </>
-
   )
 }
 
