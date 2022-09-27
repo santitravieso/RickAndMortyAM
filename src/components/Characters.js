@@ -10,6 +10,7 @@ const [data, setData] = useState([])
   const [lastPage, setLastPage] = useState("")
   const [showModal, setShowModal] = useState(false);
   const [status, setStatus]= useState("");
+  const [filterSucces, setfilterSucces]= useState(false);
   
 
 
@@ -17,11 +18,8 @@ const [data, setData] = useState([])
 
 
   useEffect(() => {
-    console.log(search)
-    console.log(status)
     setisLoading(true)
     getData()
-    console.log(apiURL)
     //getSearch()
     return () => {
 
@@ -29,6 +27,7 @@ const [data, setData] = useState([])
   }, [pageCurrent])
 
   const geFiltertData =async () => {
+    console.log('aca', apiURL)
     fetch(apiURL)
       .then(res => res.json())
       .then(res => {
@@ -36,7 +35,12 @@ const [data, setData] = useState([])
         setLastPage(res.info.next)
         setData(res.results)
         setisLoading(false)
-      }}
+      }
+      else {
+        setfilterSucces(true)
+        clearFilters()
+      }
+    }
         );
   }
 
@@ -44,10 +48,16 @@ const [data, setData] = useState([])
     fetch(apiURL)
       .then(res => res.json())
       .then(res => {
-        setLastPage(res.info.next)
-        setData(data.concat(res.results))
-        setisLoading(false)
-      });
+        if(res.results !=undefined){
+          setLastPage(res.info.next)
+          setData(res.results)
+          setisLoading(false)
+        } else {
+          setfilterSucces(true)
+          clearFilters()
+        }
+      }
+          );
   }
   const renderItem = ({item}) => {
     return(
@@ -69,21 +79,21 @@ const [data, setData] = useState([])
 
   const handleLoadMore = () => {
     if(lastPage != null){
-    console.log("page current")
     setpageCurrent(pageCurrent + 1)
     setisLoading(true)
   } }
   const handleChange = (text) =>{
             setpageCurrent(1)
-            console.log(text)
             setSearch(text)
-            rerender()
   }
   const rerender = () =>{
         setpageCurrent(1)
-        console.log(apiURL)
         geFiltertData()
   }
+  const clearFilters = () =>{
+    setSearch("")
+    setStatus("")
+}
 
   return (
 
@@ -92,10 +102,13 @@ const [data, setData] = useState([])
     <TextInput style={styles.textInputStyle}
         placeholder= "Ingrese nombre"
         value={search}
-        onChangeText={(text) => 
-        handleChange(text)
+        onChangeText={(text) => {
+        handleChange(text)}
         }
         />
+        <TouchableOpacity onPress={() => rerender()}>
+                <Text> apply </Text>
+    </TouchableOpacity>
     <TouchableOpacity onPress={() => setShowModal(true)}>
                 <Text> Boton </Text>
     </TouchableOpacity>
@@ -118,7 +131,17 @@ const [data, setData] = useState([])
                 <TouchableOpacity><Text onPress={() => setStatus("unknown")}> Unknown </Text></TouchableOpacity>
             </View>
             <Text onPress={() => setShowModal(false)}>Cerrar</Text>
-            <Text onPress={() => rerender()}>Render</Text>
+            <Text onPress={() => {rerender(); setShowModal(false)}}>Render</Text>
+            </View>
+            </View>
+        </Modal>
+        <Modal transparent={true} visible={filterSucces} animationType="slide">
+            <View style={styles.modalContainer}>
+            <View style={styles.modalCard}>
+            <View>
+                <Text> No existe ningun personaje con los filtros seleccionados  </Text>
+            </View>
+            <Text onPress={() => {setfilterSucces(false); rerender()}}>Cerrar</Text>
             </View>
             </View>
         </Modal>      
