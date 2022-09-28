@@ -43,6 +43,7 @@ const Characters = () =>{
   }, [pageCurrent])
 
   const geFiltertData =async () => {
+    console.log('aca', apiURL)
     fetch(apiURL)
       .then(res => res.json())
       .then(res => {
@@ -144,13 +145,13 @@ const characterTab = (character) =>{
         />
       <View style={{flexDirection:"row", flex: 2}}> 
         <TouchableOpacity style={styles.butons} onPress={() => rerender()}>
-            <Text style={styles.butonsText}> apply </Text>
+            <Text style={styles.butonsText}> Apply </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.butons} onPress={() => {setShowModal(true); clearModalFilters()}}>
-            <Text style={styles.butonsText}> Mas Filtros </Text>
+            <Text style={styles.butonsText}> More Filters </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.butons} onPress={() => clearFilters()}>
-            <Text style={styles.butonsText}> clear filters </Text>
+            <Text style={styles.butonsText}> Clear Filters </Text>
         </TouchableOpacity>
       </View>
       <View style={{flex:28}}>
@@ -169,7 +170,7 @@ const characterTab = (character) =>{
           <View style={styles.modalContainer}>
           <View style={styles.modalCard}>
           <View style={styles.fixedFilters}>
-              <Text style={styles.filterTitle}> status:  </Text>
+              <Text style={styles.filterTitle}> Status:  </Text>
               <TouchableOpacity><Text style={styles.textFilters} onPress={() => setStatus("dead")}> Dead </Text></TouchableOpacity>
               <TouchableOpacity><Text style={styles.textFilters} onPress={() => setStatus("alive")}> Alive </Text></TouchableOpacity>
               <TouchableOpacity><Text style={styles.textFilters} onPress={() => setStatus("unknown")}> Unknown </Text></TouchableOpacity>
