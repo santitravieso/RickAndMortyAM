@@ -1,5 +1,7 @@
 import React,{useState, useEffect} from 'react';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, Image, TextInput, TouchableOpacity, Modal, Input, onChangeText, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, FlatList, ActivityIndicator, Image, TextInput, TouchableOpacity, Modal, Input, onChangeText, SafeAreaView, ImageBackground } from 'react-native';
+const fondo = { uri: "https://www.pngkey.com/png/detail/3-39256_rick-and-morty-portal-rick-y-morty-portal.png" };
+
 
 const Characters = () =>{
 
@@ -111,13 +113,15 @@ const clearModalFilters = () =>{
 const characterTab = (character) =>{
   setCharacterModal(true)
   setCharacterModalItem(character)
+
   }
 
 
   return (
     <SafeAreaView>
     <>
-   
+    <ImageBackground source={fondo} resizeMode="cover" style={styles.backgroundImage}>
+      <View style={styles.screen}>
       <TextInput style={styles.textInputStyle}
         placeholder= "Ingrese nombre"
         value={search}
@@ -125,15 +129,17 @@ const characterTab = (character) =>{
         handleChange(text)}
         }
         />
-      <TouchableOpacity onPress={() => rerender()}>
-          <Text> apply </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => {setShowModal(true); clearModalFilters()}}>
-          <Text> Mas Filtros </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => clearFilters()}>
-          <Text> clear filters </Text>
-      </TouchableOpacity>
+      <View style={{flexDirection:"row"}}> 
+        <TouchableOpacity style={styles.butons} onPress={() => rerender()}>
+            <Text style={styles.butonsText}> apply </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.butons} onPress={() => {setShowModal(true); clearModalFilters()}}>
+            <Text style={styles.butonsText}> Mas Filtros </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.butons} onPress={() => clearFilters()}>
+            <Text style={styles.butonsText}> clear filters </Text>
+        </TouchableOpacity>
+      </View>
       <FlatList
           style={styles.container}
           data={data}
@@ -205,8 +211,11 @@ const characterTab = (character) =>{
             <Text onPress={() => setCharacterModal(false)}>Cerrar</Text>
           </View>
           </View>
-      </Modal>    
-              </></SafeAreaView>
+      </Modal>
+      </View>
+      </ImageBackground>    
+              </>
+              </SafeAreaView>
   )
 }
 
@@ -215,7 +224,36 @@ export default Characters;
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
-    backgroundColor: '#f5fcff'
+    backgroundColor: '#f5fcff',
+    width: 230,
+    alignContent: 'center'
+  },
+  backgroundImage:{
+    height:900,
+    width:420,
+    size: 100,
+    justifyContent: 'center'
+  },
+  butons: {
+    flex:1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: 'black',
+    marginHorizontal: 3,
+  },
+  butonsText: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: 'bold',
+    letterSpacing: 0.25,
+    color: '#7FFF00',
+  },
+  screen:{
+    alignSelf: 'center'
   },
   itemRow: {
     borderBottomColor: '#ccc',
