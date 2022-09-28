@@ -1,6 +1,13 @@
 import React,{useState, useEffect} from 'react';
 import { StyleSheet, Text, View, FlatList, ActivityIndicator, Image, TextInput, TouchableOpacity, Modal, Input, onChangeText, SafeAreaView, ImageBackground } from 'react-native';
-const fondo = { uri: "https://www.pngkey.com/png/detail/3-39256_rick-and-morty-portal-rick-y-morty-portal.png" };
+//const fondo = { uri: "https://wallpapercrafter.com/desktop/384199-TV-Show-Rick-and-Morty-Phone-Wallpaper.jpg" };
+//const logo = { uri: "https://assets.stickpng.com/images/58f37720a4fa116215a9240f.png" };
+
+import DefaultImage from '../../assets/fondo.jpg';
+import DefaultImage2 from '../../assets/logo.png';
+
+const logo = Image.resolveAssetSource(DefaultImage2).uri;
+const fondo = Image.resolveAssetSource(DefaultImage).uri;
 
 
 const Characters = () =>{
@@ -18,6 +25,8 @@ const Characters = () =>{
   const [gender, setGender] = useState("")
   const [characterModal, setCharacterModal] = useState(false)
   const [characterModalItem, setCharacterModalItem] = useState([])
+  const [origin, setCharacterOrigin] = useState([])
+  const [location, setCharacterLocation] = useState([])
   
 
 
@@ -113,23 +122,28 @@ const clearModalFilters = () =>{
 const characterTab = (character) =>{
   setCharacterModal(true)
   setCharacterModalItem(character)
+  setCharacterLocation(character.location)
+  setCharacterOrigin(character.origin)
 
   }
 
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{backgroundColor: 'black'}}>
+     
     <>
-    <ImageBackground source={fondo} resizeMode="cover" style={styles.backgroundImage}>
+    <ImageBackground source={{uri: fondo}} resizeMode="cover" style={styles.backgroundImage}>
+    <Image source={{uri: logo}} style={styles.logo}></Image>
       <View style={styles.screen}>
       <TextInput style={styles.textInputStyle}
         placeholder= "Ingrese nombre"
+        placeholderTextColor= '#7FFF00'
         value={search}
         onChangeText={(text) => {
         handleChange(text)}
         }
         />
-      <View style={{flexDirection:"row"}}> 
+      <View style={{flexDirection:"row", flex: 2}}> 
         <TouchableOpacity style={styles.butons} onPress={() => rerender()}>
             <Text style={styles.butonsText}> apply </Text>
         </TouchableOpacity>
@@ -140,6 +154,7 @@ const characterTab = (character) =>{
             <Text style={styles.butonsText}> clear filters </Text>
         </TouchableOpacity>
       </View>
+      <View style={{flex:28}}>
       <FlatList
           style={styles.container}
           data={data}
@@ -149,41 +164,46 @@ const characterTab = (character) =>{
           onEndReached={handleLoadMore}
           onEndReachedThreshold={0.2} 
       />
+      </View>
           
       <Modal transparent={true} visible={showModal} animationType="slide">
           <View style={styles.modalContainer}>
           <View style={styles.modalCard}>
           <View style={styles.fixedFilters}>
-              <Text> status:  </Text>
-              <TouchableOpacity><Text onPress={() => setStatus("dead")}> Dead </Text></TouchableOpacity>
-              <TouchableOpacity><Text onPress={() => setStatus("alive")}> Alive </Text></TouchableOpacity>
-              <TouchableOpacity><Text onPress={() => setStatus("unknown")}> Unknown </Text></TouchableOpacity>
+              <Text style={styles.filterTitle}> status:  </Text>
+              <TouchableOpacity><Text style={styles.textFilters} onPress={() => setStatus("dead")}> Dead </Text></TouchableOpacity>
+              <TouchableOpacity><Text style={styles.textFilters} onPress={() => setStatus("alive")}> Alive </Text></TouchableOpacity>
+              <TouchableOpacity><Text style={styles.textFilters} onPress={() => setStatus("unknown")}> Unknown </Text></TouchableOpacity>
           </View>
           <View style={styles.textInputFilters}>
-              <Text> Species:  </Text>
-              <TextInput style={styles.textInputStyle}
+              <Text style={styles.filterTitle}> Species:  </Text>
+              <TextInput style={styles.filterTextInputStyle}
                 placeholder= "Ingrese especie"
+                placeholderTextColor= '#7FFF00'
                 value={species}
                 onChangeText={newText => setSpecies(newText)}
               />
           </View>
           <View style={styles.textInputFilters}>
-              <Text> Tipo:  </Text>
-              <TextInput style={styles.textInputStyle}
+              <Text style={styles.filterTitle}> Tipo:  </Text>
+              <TextInput style={styles.filterTextInputStyle}
                 placeholder= "Ingrese Tipo"
+                placeholderTextColor= '#7FFF00'
                 value={type}
                 onChangeText={newText => setType(newText)}
               />
           </View>
-          <View style={styles.fixedFilters} >
-              <Text> Genero:  </Text>
-              <TouchableOpacity><Text onPress={() => setGender("female")}> Female </Text></TouchableOpacity>
-              <TouchableOpacity><Text onPress={() => setGender("male")}> Male </Text></TouchableOpacity>
-              <TouchableOpacity><Text onPress={() => setGender("genderless")}> Genderless </Text></TouchableOpacity>
-              <TouchableOpacity><Text onPress={() => setGender("unknown")}> Unknown </Text></TouchableOpacity>
+          <View style={styles.fixedFilters2} >
+              <Text style={styles.filterTitle}> Genero:  </Text>
+              <View style={styles.fixedFilters3}>
+              <TouchableOpacity><Text style={styles.genderFilters} onPress={() => setGender("female")}> Female </Text></TouchableOpacity>
+              <TouchableOpacity><Text style={styles.genderFilters} onPress={() => setGender("male")}> Male </Text></TouchableOpacity>
+              <TouchableOpacity><Text style={styles.genderFilters} onPress={() => setGender("genderless")}> Genderless </Text></TouchableOpacity>
+              <TouchableOpacity><Text  style={styles.genderFilters}onPress={() => setGender("unknown")}> Unknown </Text></TouchableOpacity>
+              </View>
           </View>
-          <Text onPress={() => setShowModal(false)}>Cerrar</Text>
-          <Text onPress={() => {rerender(); setShowModal(false)}}>Render</Text>
+          <Text style={styles.filterTitle} onPress={() => {rerender(); setShowModal(false)}}>Apply</Text>
+          <Text style={styles.filterTitle} onPress={() => setShowModal(false)}>Cerrar</Text>
           </View>
           </View>
       </Modal>
@@ -199,16 +219,18 @@ const characterTab = (character) =>{
       </Modal>    
       <Modal transparent={true} visible={characterModal} animationType="slide">
           <View style={styles.modalContainer}>
-          <View style={styles.modalCard}>
-            <View style={styles.itemRow}>
+          <View style={styles.modalCardChar}>
+            <View style={styles.itemRowModal}>
+              <Text style={styles.itemTextChar}>{characterModalItem.name}</Text>
               <Image style={styles.itemImage} source={{uri: characterModalItem.image}} />
-              <Text style={styles.itemText}>{characterModalItem.name}</Text>
               <Text style={styles.itemText}>{characterModalItem.status}</Text>
               <Text style={styles.itemText}>{characterModalItem.species}</Text>
               <Text style={styles.itemText}>{characterModalItem.type}</Text>
               <Text style={styles.itemText}>{characterModalItem.gender}</Text>
+              <Text style={styles.itemText}>{origin.name}</Text>
+              <Text style={styles.itemText}>{location.name}</Text>
             </View>
-            <Text onPress={() => setCharacterModal(false)}>Cerrar</Text>
+            <Text style={styles.filterTitle} onPress={() => setCharacterModal(false)}>Cerrar</Text>
           </View>
           </View>
       </Modal>
@@ -223,64 +245,96 @@ export default Characters;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
-    backgroundColor: '#f5fcff',
-    width: 230,
-    alignContent: 'center'
+    alignContent: 'center',
+  },
+  logo: {
+    height: '19%',
+    width:'100%',
+    marginTop: '30%'
   },
   backgroundImage:{
-    height:900,
-    width:420,
-    size: 100,
+    height:'100%',
+    width:'100%',
     justifyContent: 'center'
   },
   butons: {
-    flex:1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 32,
+    paddingVertical: 2,
+    paddingHorizontal: 3,
     borderRadius: 4,
     elevation: 3,
     backgroundColor: 'black',
     marginHorizontal: 3,
+    marginBottom:15,
   },
   butonsText: {
-    fontSize: 16,
+    fontSize: 14,
     lineHeight: 21,
     fontWeight: 'bold',
     letterSpacing: 0.25,
     color: '#7FFF00',
+    alignContent: 'center',
+    
   },
   screen:{
     alignSelf: 'center'
   },
   itemRow: {
-    borderBottomColor: '#ccc',
-    marginBottom: 10,
-    borderBottomWidth: 1
+    marginBottom: '10%',
+    borderWidth: 5,
+    borderColor: '#7FFF00',
+    backgroundColor: 'black',
+    alignContent: 'center',
+    alignSelf: 'center'
+  },
+  itemRowModal: {
+    marginBottom: '10%',
+    backgroundColor: 'black',
+    alignContent: 'center',
+    alignSelf: 'center',
+    marginTop: '2%'
   },
 
   itemImage: {
     width: 200,
     height: 200,
-    resizeMode: 'cover'
+    resizeMode: 'cover',
+    alignSelf: 'center',
+    margin: '4%'
   },
   itemText: {
     fontSize: 16,
-    padding: 5
+    padding: 5,
+    color: '#7FFF00',
+    alignSelf: 'center'
+  },
+  itemTextChar: {
+    fontSize: 25,
+    padding: 5,
+    color: '#7FFF00',
+    alignSelf: 'center'
   },
   loader: {
     marginTop: 10,
     alignItems: 'center'
   },
   textInputStyle: {
-    height: 50,
     borderWidth: 1,
-    paddingLeft: 20,
-    margin: 45,
-    borderColor: '#009688',
-    backgroundColor: 'white'
+    paddingLeft: '8%',
+    marginTop: '0%',
+    marginBottom: '5%',
+    alignSelf: 'center',
+    flex: 2,
+    borderColor: '#7FFF00',
+    backgroundColor: 'black',
+    textDecorationColor: 'white',
+    color: '#7FFF00',
+    alignContent: 'center',
+    maxWidth: '41%',
+    width: 200,
+    textAlign: 'center',
+    paddingRight: '8%'
   },
   modalContainer: {
     flex: 1,
@@ -288,17 +342,91 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalCard: {
-    width: '80%',
+    width: '90%',
     height: '50%',
-    backgroundColor: 'white',
+    backgroundColor: 'black',
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
+    borderColor: '#7FFF00',
+    borderWidth: '5%'
+  },
+  modalCardChar: {
+    width: '90%',
+    height: '60%',
+    backgroundColor: 'black',
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: '#7FFF00',
+    borderWidth: '5%'
   },
   fixedFilters: {
-    flexDirection: "row"
+    flexDirection: "row",
+    marginTop: '10%',
+    flex: 1,
+    marginBottom: '10%'
   },
-  /*textInputFilters: {
-    flexDirection: "row"
-  }*/
+  fixedFilters2: {
+    flexDirection: "column",
+    marginTop: '1%',
+    flex: 2,
+    marginBottom: '10%',
+    alignContent: 'center',
+    alignSelf: 'center'
+  },
+  fixedFilters3:{
+    flexDirection: "row",
+    marginTop: '1%',
+    flex: 1,
+    marginBottom: '1%'
+  },
+  textInputFilters: {
+    flexDirection: "row",
+    marginTop: '1%',
+    flex: 2,
+    marginBottom: '5%',
+  },
+  textFilters: {
+    borderColor: '#7FFF00',
+    borderWidth: '1%',
+    borderRadius: 10,
+    marginHorizontal: '2.8%',
+    flex: 1,
+    color: '#7FFF00',
+    alignSelf: 'center',
+    alignContent: 'center',
+    paddingTop: '1%',
+    padding: '2%'
+  },
+  filterTitle: {
+    color: '#7FFF00',
+    flex: 1,
+    fontSize: 24
+  },
+  filterTextInputStyle: {
+    borderWidth: 1,
+    marginBottom: '5%',
+    borderColor: '#7FFF00',
+    backgroundColor: 'black',
+    textDecorationColor: 'white',
+    color: '#7FFF00',
+    width: 200,
+    textAlign: 'center',
+    marginRight: '5%',
+    padding: '2%',
+  },
+  genderFilters: {
+    borderColor: '#7FFF00',
+    borderWidth: '1%',
+    borderRadius: 10,
+    marginHorizontal: '1%',
+    flex: 1,
+    color: '#7FFF00',
+    alignSelf: 'center',
+    alignContent: 'center',
+    paddingTop: '1%',
+    padding: '2%'
+  }
+
 });
