@@ -43,7 +43,6 @@ const Characters = () =>{
   }, [pageCurrent])
 
   const geFiltertData =async () => {
-    console.log('aca', apiURL)
     fetch(apiURL)
       .then(res => res.json())
       .then(res => {
