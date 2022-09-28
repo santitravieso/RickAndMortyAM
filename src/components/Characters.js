@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from 'react';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, Image, TextInput, TouchableOpacity, Modal, Input, onChangeText } from 'react-native';
+import { StyleSheet, Text, View, FlatList, ActivityIndicator, Image, TextInput, TouchableOpacity, Modal, Input, onChangeText, SafeAreaView } from 'react-native';
 
 const Characters = () =>{
 
@@ -11,10 +11,13 @@ const [data, setData] = useState([])
   const [showModal, setShowModal] = useState(false);
   const [status, setStatus]= useState("");
   const [filterSucces, setfilterSucces]= useState(false);
+  const [species, setSpecies] = useState("")
+  const [type, setType] = useState("")
+  const [gender, setGender] = useState("")
   
 
 
- const apiURL = "https://rickandmortyapi.com/api/character/?page="+pageCurrent+"&name="+search+"&status="+status+"&species="+"&type="+"&gender="
+ const apiURL = "https://rickandmortyapi.com/api/character/?page="+pageCurrent+"&name="+search+"&status="+status+"&species="+species+"&type="+type+"&gender="+gender
 
 
   useEffect(() => {
@@ -45,12 +48,13 @@ const [data, setData] = useState([])
   }
 
   const getData =async () => {
+    console.log('el otro', apiURL)
     fetch(apiURL)
       .then(res => res.json())
       .then(res => {
         if(res.results !=undefined){
           setLastPage(res.info.next)
-          setData(res.results)
+          setData(data.concat(res.results))
           setisLoading(false)
         } else {
           setfilterSucces(true)
@@ -83,69 +87,103 @@ const [data, setData] = useState([])
     setisLoading(true)
   } }
   const handleChange = (text) =>{
-            setpageCurrent(1)
-            setSearch(text)
+    setpageCurrent(1)
+    setSearch(text)
   }
   const rerender = () =>{
-        setpageCurrent(1)
-        geFiltertData()
+    setpageCurrent(1)
+    geFiltertData()
   }
   const clearFilters = () =>{
     setSearch("")
-    setStatus("")
+    clearModalFilters()
+}
+const clearModalFilters = () =>{
+  setStatus("")
+  setSpecies("")
+  setType("")
+  setGender("")
 }
 
-  return (
 
+  return (
+    <SafeAreaView>
     <>
    
-    <TextInput style={styles.textInputStyle}
+      <TextInput style={styles.textInputStyle}
         placeholder= "Ingrese nombre"
         value={search}
         onChangeText={(text) => {
         handleChange(text)}
         }
         />
-        <TouchableOpacity onPress={() => rerender()}>
-                <Text> apply </Text>
-    </TouchableOpacity>
-    <TouchableOpacity onPress={() => setShowModal(true)}>
-                <Text> Boton </Text>
-    </TouchableOpacity>
-        <FlatList
-              style={styles.container}
-              data={data}
-              renderItem={renderItem}
-              keyExtractor={(item, index) => index.toString()}
-              ListFooterComponent={renderFooter}
-              onEndReached={handleLoadMore}
-              onEndReachedThreshold={0.2} />
-              
-        <Modal transparent={true} visible={showModal} animationType="slide">
-            <View style={styles.modalContainer}>
-            <View style={styles.modalCard}>
-            <View>
-                <Text> status:  </Text>
-                <TouchableOpacity><Text onPress={() => setStatus("dead")}> Dead </Text></TouchableOpacity>
-                <TouchableOpacity><Text onPress={() => setStatus("alive")}> Alive </Text></TouchableOpacity>
-                <TouchableOpacity><Text onPress={() => setStatus("unknown")}> Unknown </Text></TouchableOpacity>
-            </View>
-            <Text onPress={() => setShowModal(false)}>Cerrar</Text>
-            <Text onPress={() => {rerender(); setShowModal(false)}}>Render</Text>
-            </View>
-            </View>
-        </Modal>
-        <Modal transparent={true} visible={filterSucces} animationType="slide">
-            <View style={styles.modalContainer}>
-            <View style={styles.modalCard}>
-            <View>
-                <Text> No existe ningun personaje con los filtros seleccionados  </Text>
-            </View>
-            <Text onPress={() => {setfilterSucces(false); rerender()}}>Cerrar</Text>
-            </View>
-            </View>
-        </Modal>      
-              </>
+      <TouchableOpacity onPress={() => rerender()}>
+          <Text> apply </Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => {setShowModal(true); clearModalFilters()}}>
+          <Text> Mas Filtros </Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => clearFilters()}>
+          <Text> clear filters </Text>
+      </TouchableOpacity>
+      <FlatList
+          style={styles.container}
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+          ListFooterComponent={renderFooter}
+          onEndReached={handleLoadMore}
+          onEndReachedThreshold={0.2} 
+      />
+          
+      <Modal transparent={true} visible={showModal} animationType="slide">
+          <View style={styles.modalContainer}>
+          <View style={styles.modalCard}>
+          <View style={styles.fixedFilters}>
+              <Text> status:  </Text>
+              <TouchableOpacity><Text onPress={() => setStatus("dead")}> Dead </Text></TouchableOpacity>
+              <TouchableOpacity><Text onPress={() => setStatus("alive")}> Alive </Text></TouchableOpacity>
+              <TouchableOpacity><Text onPress={() => setStatus("unknown")}> Unknown </Text></TouchableOpacity>
+          </View>
+          <View style={styles.textInputFilters}>
+              <Text> Species:  </Text>
+              <TextInput style={styles.textInputStyle}
+                placeholder= "Ingrese especie"
+                value={species}
+                onChangeText={newText => setSpecies(newText)}
+              />
+          </View>
+          <View style={styles.textInputFilters}>
+              <Text> Tipo:  </Text>
+              <TextInput style={styles.textInputStyle}
+                placeholder= "Ingrese Tipo"
+                value={type}
+                onChangeText={newText => setType(newText)}
+              />
+          </View>
+          <View style={styles.fixedFilters} >
+              <Text> Genero:  </Text>
+              <TouchableOpacity><Text onPress={() => setGender("female")}> Female </Text></TouchableOpacity>
+              <TouchableOpacity><Text onPress={() => setGender("male")}> Male </Text></TouchableOpacity>
+              <TouchableOpacity><Text onPress={() => setGender("genderless")}> Genderless </Text></TouchableOpacity>
+              <TouchableOpacity><Text onPress={() => setGender("unknown")}> Unknown </Text></TouchableOpacity>
+          </View>
+          <Text onPress={() => setShowModal(false)}>Cerrar</Text>
+          <Text onPress={() => {rerender(); setShowModal(false)}}>Render</Text>
+          </View>
+          </View>
+      </Modal>
+      <Modal transparent={true} visible={filterSucces} animationType="slide">
+          <View style={styles.modalContainer}>
+          <View style={styles.modalCard}>
+          <View>
+              <Text> No existe ningun personaje con los filtros seleccionados  </Text>
+          </View>
+          <Text onPress={() => {setfilterSucces(false); rerender()}}>Cerrar</Text>
+          </View>
+          </View>
+      </Modal>      
+              </></SafeAreaView>
   )
 }
 
@@ -196,4 +234,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  fixedFilters: {
+    flexDirection: "row"
+  },
+  /*textInputFilters: {
+    flexDirection: "row"
+  }*/
 });
