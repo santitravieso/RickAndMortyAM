@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, FlatList, ActivityIndicator, Image, TextInput, 
 
 const Characters = () =>{
 
-const [data, setData] = useState([])
+  const [data, setData] = useState([])
   const [isLoading, setisLoading] = useState(false)
   const [pageCurrent, setpageCurrent] = useState(1)
   const [search, setSearch] = useState("")
@@ -14,6 +14,8 @@ const [data, setData] = useState([])
   const [species, setSpecies] = useState("")
   const [type, setType] = useState("")
   const [gender, setGender] = useState("")
+  const [characterModal, setCharacterModal] = useState(false)
+  const [characterModalItem, setCharacterModalItem] = useState([])
   
 
 
@@ -66,8 +68,10 @@ const [data, setData] = useState([])
   const renderItem = ({item}) => {
     return(
       <View style={styles.itemRow}>
-        <Image style={styles.itemImage} source={{uri: item.image}} />
-        <Text style={styles.itemText}>{item.name}</Text>
+        <TouchableOpacity onPress={() => characterTab(item)}>
+          <Image style={styles.itemImage} source={{uri: item.image}} />
+          <Text style={styles.itemText}>{item.name}</Text>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -104,6 +108,10 @@ const clearModalFilters = () =>{
   setType("")
   setGender("")
 }
+const characterTab = (character) =>{
+  setCharacterModal(true)
+  setCharacterModalItem(character)
+  }
 
 
   return (
@@ -182,7 +190,22 @@ const clearModalFilters = () =>{
           <Text onPress={() => {setfilterSucces(false); rerender()}}>Cerrar</Text>
           </View>
           </View>
-      </Modal>      
+      </Modal>    
+      <Modal transparent={true} visible={characterModal} animationType="slide">
+          <View style={styles.modalContainer}>
+          <View style={styles.modalCard}>
+            <View style={styles.itemRow}>
+              <Image style={styles.itemImage} source={{uri: characterModalItem.image}} />
+              <Text style={styles.itemText}>{characterModalItem.name}</Text>
+              <Text style={styles.itemText}>{characterModalItem.status}</Text>
+              <Text style={styles.itemText}>{characterModalItem.species}</Text>
+              <Text style={styles.itemText}>{characterModalItem.type}</Text>
+              <Text style={styles.itemText}>{characterModalItem.gender}</Text>
+            </View>
+            <Text onPress={() => setCharacterModal(false)}>Cerrar</Text>
+          </View>
+          </View>
+      </Modal>    
               </></SafeAreaView>
   )
 }
