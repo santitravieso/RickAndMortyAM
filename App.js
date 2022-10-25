@@ -1,10 +1,11 @@
-import React from 'react';
-import { View } from 'react-native';
-import Characters from './src/components/Characters.js';
+import React, {Component} from 'react';
+import HomePage from './src/components/HomePage.js';
 
-const  App = () => {
-
-  return <Characters />
+class  App extends Component {
+  render(){
+    return <HomePage />
+  }
+  
 };
 
 export default App;
