@@ -1,17 +1,19 @@
-import React from 'react';
-import { StyleSheet, View, FlatList} from 'react-native';
+import React, {useRef} from 'react';
+import { StyleSheet, View, FlatList, Button} from 'react-native';
 import CharacterInList from './CharacterInList';
 
 const CharactersList = ({
     data,
     handleLoadMore,
     renderFooter,
-    characterTab
+    characterTab,
+    flatList
 }) => {
 
 return(
     <View style={{flex:28}}>
       <FlatList
+          ref={flatList}
           style={styles.container}
           data={data}
           renderItem= {({ item }) => (
@@ -26,6 +28,7 @@ return(
           onEndReachedThreshold={0.2} 
       />
       </View>
+      
 )
  }
 

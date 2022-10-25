@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react';
+import React,{useState, useEffect, useRef} from 'react';
 import { View, ActivityIndicator, Image, TextInput, SafeAreaView, ImageBackground } from 'react-native';
 import styles from '../styles/HomePageStyles';
 import DefaultImage from '../../assets/fondo.jpg';
@@ -30,6 +30,8 @@ const HomePage = () =>{
   const [location, setCharacterLocation] = useState([])
 
  const apiURL = "https://rickandmortyapi.com/api/character/?page="+pageCurrent+"&name="+search+"&status="+status+"&species="+species+"&type="+type+"&gender="+gender
+ const flatList = useRef();
+ const moveToTop = () => flatList.current.scrollToIndex({ index: 0 });
 
   useEffect(() => {
     setisLoading(true)
@@ -91,10 +93,7 @@ const HomePage = () =>{
   }
   const rerender = () =>{
     setpageCurrent(1)
-    getFiltertData()
-  }
-  const changeFilterURL = () =>{
-    setpageCurrent(1)
+    moveToTop()
     getFiltertData()
   }
   const clearFilters = () =>{
@@ -135,7 +134,8 @@ const characterTab = (character) =>{
         data={data}
         handleLoadMore={handleLoadMore}
         renderFooter={renderFooter}
-        characterTab={characterTab}/>
+        characterTab={characterTab}
+        flatList={flatList}/>
       <FiltersModal
         showModal={showModal}
         species={species}
