@@ -136,7 +136,6 @@ const characterTab = (character) =>{
         renderFooter={renderFooter}
         characterTab={characterTab}
         flatList={flatList}/>
-      <PageFooter/>
       <FiltersModal
         showModal={showModal}
         species={species}
