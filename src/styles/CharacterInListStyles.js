@@ -23,6 +23,16 @@ const styles = StyleSheet.create({
     color: '#7FFF00',
     alignSelf: 'center'
   },
+  favoriteImage: {
+    width: 25,
+    height: 25,
+  },
+
+  favoriteButton: { 
+      justifyContent: 'center',
+      marginLeft: 'auto',
+      marginRight: '3%' 
+  }
   });
   
 
