@@ -7,7 +7,9 @@ const CharactersList = ({
     handleLoadMore,
     renderFooter,
     characterTab,
-    flatList
+    flatList,
+    addFavourite,
+    takeFavourite
 }) => {
 
 return(
@@ -20,6 +22,8 @@ return(
             <CharacterInList
             item = {item}
             characterTab = {characterTab}
+            addFavourite= {addFavourite}
+            takeFavourite= {takeFavourite}
             ></CharacterInList>
         )}
           keyExtractor={(item, index) => index.toString()}
