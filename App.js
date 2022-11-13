@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { Image } from 'react-native';
-
 import HomePage from './src/components/HomePage.js';
 import FavoritePage from  './src/components/FavoritePage';
 import { NavigationContainer } from '@react-navigation/native';
@@ -17,10 +16,10 @@ export default function App(){
                 
                 initialRouteName = 'home'
                 screenOptions = {({ route }) => ({
-                    tabBarActiveTintColor: 'white',
-                    tabBarInactiveTintColor: 'white',
-                    tabBarActiveBackgroundColor: 'black',
-                    tabBarInactiveBackgroundColor: '#7fff00',
+                    tabBarActiveTintColor: '#7fff00',
+                    tabBarInactiveTintColor: 'black',
+                    tabBarActiveBackgroundColor: '#7fff00',
+                    tabBarInactiveBackgroundColor: 'black',
                     tabBarIcon: () => {
                         if (route.name === 'home') {
                             return( 
