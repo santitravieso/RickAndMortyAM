@@ -10,7 +10,9 @@ const CharactersList = ({
     handleLoadMore,
     renderFooter,
     characterTab,
-    flatList
+    flatList,
+    addFavourite,
+    takeFavourite
 }) => {
 const scrollY = useRef(new Animated.Value(0)).current;
 return(
@@ -34,6 +36,8 @@ return(
             item = {item}
             characterTab = {characterTab}
             translateX = {translateX}
+            addFavourite= {addFavourite}
+            takeFavourite= {takeFavourite}
             ></CharacterInList>)
           }}
           keyExtractor={(item, index) => index.toString()}

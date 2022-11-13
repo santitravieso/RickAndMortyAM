@@ -5,15 +5,19 @@ import styles from '../styles/CharacterInListStyles';
 const CharacterInList =({
     item,
     characterTab,
-    translateX
-
+    addFavourite,
+    takeFavourite
 }) => {
     const [isFavorite, setIsFavorite] = useState(false);
     const toggleFavorite = () => {
       if(isFavorite == true){
         setIsFavorite(false);
+        takeFavourite(item)
+        
       }else{
         setIsFavorite(true);
+        console.log(item);
+        addFavourite(item);
       }
     }
     const flipAnimation = useRef( new Animated.Value( 0 ) ).current;

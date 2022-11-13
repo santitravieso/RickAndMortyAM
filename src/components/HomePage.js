@@ -8,6 +8,9 @@ import CharactersList from './CharactersList';
 import FiltersModal from './FiltersModal';
 import BusquedaVaciaModal from './BusquedaVaciaModal';
 import CharacterViewModal from './CharacterViewModal';
+import {ref, set, remove } from "firebase/database";
+import { db } from '../../FirebaseConfig';
+
 
 const logo = Image.resolveAssetSource(DefaultImage2).uri;
 const fondo = Image.resolveAssetSource(DefaultImage).uri;
@@ -23,6 +26,7 @@ const HomePage = () =>{
   const [filterSucces, setfilterSucces]= useState(false);
   const [species, setSpecies] = useState("")
   const [type, setType] = useState("")
+ // const [character, setCharacter]= useState({});
   const [gender, setGender] = useState("")
   const [characterModal, setCharacterModal] = useState(false)
   const [characterModalItem, setCharacterModalItem] = useState([])
@@ -87,6 +91,8 @@ const HomePage = () =>{
     setpageCurrent(pageCurrent + 1)
     setisLoading(true)
   } }
+
+
   const handleChange = (text) =>{
     setpageCurrent(1)
     setSearch(text)
@@ -112,6 +118,23 @@ const characterTab = (character) =>{
   setCharacterLocation(character.location)
   setCharacterOrigin(character.origin)
   }
+
+const addFavourite=(character) => {
+  set(ref(db, 'favourites/' + character.id),{
+    character: character
+  })
+  .then(() => {
+    // Data saved successfully!
+  })
+  .catch((error) => {
+    // The write failed...
+  });
+}
+
+const takeFavourite=(character) =>{
+  remove(ref(db, 'favourites/' + character.id));
+}
+
   return (
     <SafeAreaView style={{backgroundColor: 'black'}}>
     <>
@@ -135,7 +158,10 @@ const characterTab = (character) =>{
         handleLoadMore={handleLoadMore}
         renderFooter={renderFooter}
         characterTab={characterTab}
+        addFavourite= {addFavourite}
+        takeFavourite= {takeFavourite}
         flatList={flatList}/>
+
       <FiltersModal
         showModal={showModal}
         species={species}
