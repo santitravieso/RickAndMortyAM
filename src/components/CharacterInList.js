@@ -4,7 +4,8 @@ import styles from '../styles/CharacterInListStyles';
 
 const CharacterInList =({
     item,
-    characterTab
+    characterTab,
+    translateX
 
 }) => {
     const [isFavorite, setIsFavorite] = useState(false);
@@ -46,7 +47,7 @@ const CharacterInList =({
     };
 
     return(
-      <Animated.View style={{...fliptStyle }}>
+      <Animated.View style={{...fliptStyle, transform: [{ translateX}] }}>
         <View style={styles.itemRow}>
           <TouchableOpacity onPress={() => characterTab(item)}>
             <Image style={styles.itemImage} source={{uri: item.image}} />
