@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     borderColor: '#7FFF00',
     backgroundColor: 'black',
     alignContent: 'center',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   itemImage: {
     width: 200,
@@ -21,7 +21,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     padding: 5,
     color: '#7FFF00',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginLeft: '5%'
   },
   favoriteImage: {
     width: 25,
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
   favoriteButton: { 
       justifyContent: 'center',
       marginLeft: 'auto',
-      marginRight: '3%' 
+      marginRight: '7%' ,
   }
   });
   

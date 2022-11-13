@@ -7,15 +7,20 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 
+
 const Tab = createBottomTabNavigator();
 
 export default function App(){
     return(
-    <NavigationContainer>
+    <NavigationContainer >
             <Tab.Navigator 
                 
                 initialRouteName = 'home'
                 screenOptions = {({ route }) => ({
+                    tabBarActiveTintColor: 'white',
+                    tabBarInactiveTintColor: 'white',
+                    tabBarActiveBackgroundColor: 'black',
+                    tabBarInactiveBackgroundColor: '#7fff00',
                     tabBarIcon: () => {
                         if (route.name === 'home') {
                             return( 
@@ -31,7 +36,7 @@ export default function App(){
                 })} 
             >
                 <Tab.Screen name = 'home' component = {HomePage} options = {{ headerShown: false }} />
-                <Tab.Screen name = 'favorites' component = {FavoritePage} options = {{ headerShown: false }} />
+                <Tab.Screen  name = 'favorites' component = {FavoritePage} options = {{ headerShown: false }} />
             </Tab.Navigator>
         </NavigationContainer>
     );
