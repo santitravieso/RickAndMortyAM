@@ -22,7 +22,7 @@ const CharacterInList =({
       transform: [ isFavorite ?
         { rotateY: flipAnimation.interpolate( {
           inputRange: [ 0, 360 ],
-          outputRange: [ "0deg", "360deg" ]
+          outputRange: [ "0deg", "1080deg" ]
         } ) } : { rotateY: flipAnimation.interpolate( {
           inputRange: [ 0, 360 ],
           outputRange: [ "0deg", "720deg" ]
@@ -33,7 +33,7 @@ const CharacterInList =({
     const flipFav = () => {
       Animated.timing( flipAnimation, {
         toValue: 360,
-        duration: 2500,
+        duration: 1000,
         useNativeDriver: true,
       } ).start();
     };
