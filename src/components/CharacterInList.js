@@ -6,7 +6,8 @@ const CharacterInList =({
     item,
     characterTab,
     addFavourite,
-    takeFavourite
+    takeFavourite,
+    translateX
 }) => {
     const [isFavorite, setIsFavorite] = useState(false);
     const toggleFavorite = () => {
