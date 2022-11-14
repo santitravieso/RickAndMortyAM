@@ -8,10 +8,8 @@ const CharacterInListFavorite =({
     takeFavourite,
     translateX,
 }) => {
-    const [isFavorite, setIsFavorite] = useState(true);
-    const toggleFavorite = async () => {
+    const toggleFavorite = () => {
       flipFav();
-      setIsFavorite(false);
       //takeFavourite(item);
 }
 const flipAnimation = useRef( new Animated.Value( 0 ) ).current;
@@ -34,15 +32,7 @@ const flipAnimation = useRef( new Animated.Value( 0 ) ).current;
         duration: 2000,
         useNativeDriver: true,
       } ).start();
-      setIsFavorite(false);
       return true;
-    };
-    const flipNoFav = () => {
-      Animated.timing( flipAnimation, {
-        toValue: 0,
-        duration: 2000,
-        useNativeDriver: true,
-      } ).start();
     };
 
    
