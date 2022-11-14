@@ -17,25 +17,15 @@ const CharactersList = ({
 const scrollY = useRef(new Animated.Value(0)).current;
 return(
     <View style={{flex:28}}>
-      <Animated.FlatList
+      <FlatList
           ref={flatList}
           style={styles.container}
           data={data}
           renderItem= {({ item, index }) => {
-            const inputRange = [
-              (index - 1) * ITEM_SIZE,
-              index * ITEM_SIZE,
-              (index + 1) * ITEM_SIZE,
-            ];
-            const translateX = scrollY.interpolate({
-              inputRange,
-              outputRange: [30, 30, -300]
-            })
             return (
             <CharacterInList
             item = {item}
             characterTab = {characterTab}
-            translateX = {translateX}
             addFavourite= {addFavourite}
             takeFavourite= {takeFavourite}
             ></CharacterInList>)
@@ -44,10 +34,6 @@ return(
           ListFooterComponent={renderFooter}
           onEndReached={handleLoadMore}
           onEndReachedThreshold={0.2} 
-          onScroll={Animated.event([{ nativeEvent: {contentOffset: {y: scrollY}}}],
-            {useNativeDriver: true}
-            )}
-            scrollEventThrottle={16}
       />
       </View>
       

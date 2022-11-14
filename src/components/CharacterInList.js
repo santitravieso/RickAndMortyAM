@@ -7,7 +7,6 @@ const CharacterInList =({
     characterTab,
     addFavourite,
     takeFavourite,
-    translateX
 }) => {
     const [isFavorite, setIsFavorite] = useState(false);
     const toggleFavorite = () => {
@@ -51,7 +50,6 @@ const CharacterInList =({
     };
 
     return(
-      <Animated.View style={{transform: [{ translateX}]}}>
         <Animated.View style={{...fliptStyle  }}>
         <View style={styles.itemRow}>
           <TouchableOpacity onPress={() => characterTab(item)}>
@@ -72,7 +70,6 @@ const CharacterInList =({
           </TouchableOpacity>
         </View>
         </Animated.View>
-      </Animated.View>
     )
 }
 

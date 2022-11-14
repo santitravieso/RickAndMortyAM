@@ -6,7 +6,6 @@ const CharacterInListFavorite =({
     item,
     characterTab,
     takeFavourite,
-    translateX,
 }) => {
     const toggleFavorite = () => {
       flipFav();
@@ -37,7 +36,6 @@ const flipAnimation = useRef( new Animated.Value( 0 ) ).current;
 
    
 return(
-      <Animated.View style={{transform: [{ translateX}]}}>
         <Animated.View style={{...fliptStyle, backfaceVisibility:'hidden' }}>
           <View style={styles.itemRow}>
             <TouchableOpacity onPress={() => characterTab(item)}>
@@ -51,7 +49,6 @@ return(
             </TouchableOpacity>
           </View>
         </Animated.View>
-      </Animated.View>
       )
 }
 export default CharacterInListFavorite;
