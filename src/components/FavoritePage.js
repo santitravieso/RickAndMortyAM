@@ -5,8 +5,8 @@ import DefaultImage from '../../assets/fondo.jpg';
 import DefaultImage2 from '../../assets/logo.png';
 import { db } from '../../FirebaseConfig';
 import { ref, remove, onChildAdded, onChildRemoved } from "firebase/database";
-import CharactersListFavorite from './CharactersList';
-import CharacterViewModalFavorite from './CharacterViewModal';
+import CharactersListFavorite from './CharactersListFavorite';
+import CharacterViewModalFavorite from './CharacterViewModalFavorite';
 
 const logo = Image.resolveAssetSource(DefaultImage2).uri;
 const fondo = Image.resolveAssetSource(DefaultImage).uri;

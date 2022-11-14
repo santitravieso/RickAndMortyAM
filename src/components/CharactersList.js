@@ -3,7 +3,7 @@ import { StyleSheet, View, FlatList, Animated, Dimensions} from 'react-native';
 import CharacterInList from './CharacterInList';
 const {width, height} = Dimensions.get('window');
 
-const ITEM_SIZE = width * 0.72;
+const ITEM_SIZE = width * 0.70;
 
 const CharactersList = ({
     data,
