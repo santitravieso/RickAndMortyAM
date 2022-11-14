@@ -6,29 +6,23 @@ const CharacterInListFavorite =({
     item,
     characterTab,
     takeFavourite,
-    translateX
+    translateX,
 }) => {
     const [isFavorite, setIsFavorite] = useState(true);
     const toggleFavorite = async () => {
-      if(isFavorite == true){
-        flipFav();
-        setIsFavorite(false);
-        //takeFavourite(item);
-    }
+      flipFav();
+      setIsFavorite(false);
+      //takeFavourite(item);
 }
 const flipAnimation = useRef( new Animated.Value( 0 ) ).current;
     let flipRotation = 0;
     flipAnimation.addListener( ( { value } ) => {
       flipRotation = value;
-      if(value >= 360) takeFavourite(item) });
-    const fliptStyle = {
-      transform: [ isFavorite ?
-        { rotateY: flipAnimation.interpolate( {
-          inputRange: [ 0, 360 ],
-          outputRange: [ "0deg", "1080deg" ]
-        } ) } : { rotateY: flipAnimation.interpolate( {
-          inputRange: [ 0, 360 ],
-          outputRange: [ "0deg", "720deg" ]
+      if(value >= 180) {takeFavourite(item), flipAnimation.setValue(0) }});
+    const fliptStyle = { 
+      transform: [{ rotateY: flipAnimation.interpolate( {
+          inputRange: [ 0, 180 ],
+          outputRange: [ "0deg", "180deg" ]
         } ) }
       ],
       
@@ -36,8 +30,8 @@ const flipAnimation = useRef( new Animated.Value( 0 ) ).current;
 
     const flipFav = () => {
       Animated.timing( flipAnimation, {
-        toValue: 360,
-        duration: 1000,
+        toValue: 180,
+        duration: 2000,
         useNativeDriver: true,
       } ).start();
       setIsFavorite(false);
@@ -54,7 +48,7 @@ const flipAnimation = useRef( new Animated.Value( 0 ) ).current;
    
 return(
       <Animated.View style={{transform: [{ translateX}]}}>
-        <Animated.View style={{...fliptStyle }}>
+        <Animated.View style={{...fliptStyle, backfaceVisibility:'hidden' }}>
           <View style={styles.itemRow}>
             <TouchableOpacity onPress={() => characterTab(item)}>
               <Image style={styles.itemImage} source={{uri: item.image}} />
