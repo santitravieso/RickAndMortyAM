@@ -1,9 +1,6 @@
 import React, {useRef} from 'react';
-import { StyleSheet, View, FlatList, Animated, Dimensions, Text} from 'react-native';
+import { StyleSheet, View, FlatList, Text} from 'react-native';
 import CharacterInListFavorite from './CharacterInListFavorite';
-const {width, height} = Dimensions.get('window');
-
-const ITEM_SIZE = width * 0.70;
 
 const CharactersListFavorite = ({
     data,
@@ -13,7 +10,6 @@ const CharactersListFavorite = ({
     flatList,
     takeFavourite
 }) => {
-  const scrollY = useRef(new Animated.Value(0)).current;
 return(
     <View style={{flex:28}}>
       <View style={{backgroundColor: 'black'}}>
@@ -23,7 +19,7 @@ return(
           ref={flatList}
           style={styles.container}
           data={data}
-          renderItem= {({ item, index }) => {
+          renderItem= {({ item}) => {
             return (
             <CharacterInListFavorite
             item = {item}
