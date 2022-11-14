@@ -17,7 +17,6 @@ const CharacterInList =({
         
       }else{
         setIsFavorite(true);
-        console.log(item);
         addFavourite(item);
       }
     }
@@ -52,7 +51,8 @@ const CharacterInList =({
     };
 
     return(
-      <Animated.View style={{...fliptStyle, transform: [{ translateX}] }}>
+      <Animated.View style={{transform: [{ translateX}]}}>
+        <Animated.View style={{...fliptStyle  }}>
         <View style={styles.itemRow}>
           <TouchableOpacity onPress={() => characterTab(item)}>
             <Image style={styles.itemImage} source={{uri: item.image}} />
@@ -71,6 +71,7 @@ const CharacterInList =({
             </View>
           </TouchableOpacity>
         </View>
+        </Animated.View>
       </Animated.View>
     )
 }
