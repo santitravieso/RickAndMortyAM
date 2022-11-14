@@ -29,7 +29,7 @@ return(
             ];
             const translateX = scrollY.interpolate({
               inputRange,
-              outputRange: [30, -30, -500]
+              outputRange: [30, 30, -300]
             })
             return (
             <CharacterInList

@@ -20,7 +20,7 @@ const FavoritePage = () =>{
   const [isLoading, setisLoading] = useState(false)
   const [lastPage, setLastPage] = useState("")
   const [pageCurrent, setpageCurrent] = useState(1)
-
+  const [flag, setFlag] = useState();
 
 
 
@@ -72,7 +72,8 @@ const FavoritePage = () =>{
         renderFooter={renderFooter}
         characterTab={characterTab}
         takeFavourite= {takeFavourite}
-        flatList={flatList}/>
+        flatList={flatList}
+        setFlag={setFlag}/>
 
       <CharacterViewModalFavorite
       characterModal={characterModal}
