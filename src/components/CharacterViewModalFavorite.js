@@ -1,9 +1,22 @@
 import React from 'react';
 import { Text, View, Image, Modal} from 'react-native';
 import styles from '../styles/CharacterViewModalStyles';
+import { db } from '../../FirebaseConfig';
+import {update, set, ref, remove, onChildAdded, onChildRemoved, onValue } from "firebase/database";
 
 
-const CharacterViewModalFavorite =({
+const readComment = (id) =>{
+  console.log(id);
+  const refBD = ref(db, 'favourites/'+ id + '/character/comment');
+  onValue(refBD, (snapshot) => {
+    const comment = snapshot.val();
+    console.log(comment);
+    return comment;
+  })}
+
+
+  
+  const CharacterViewModalFavorite =({
     characterModal,
     characterModalItem,
     origin,
@@ -23,7 +36,7 @@ const CharacterViewModalFavorite =({
               <Text style={styles.itemText}>{characterModalItem.gender}</Text>
               <Text style={styles.itemText}>{origin.name}</Text>
               <Text style={styles.itemText}>{location.name}</Text>
-              <Text style={styles.itemText}>{}</Text>
+              <Text style={styles.itemText}>{readComment(characterModalItem.id)}</Text>
             </View>
             <Text style={styles.filterTitle} onPress={() => setCharacterModal(false)}>Close</Text>
           </View>
