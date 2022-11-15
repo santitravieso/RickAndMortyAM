@@ -6,6 +6,7 @@ const CharacterInListFavorite =({
     item,
     characterTab,
     takeFavourite,
+    commentTab,
 }) => {
     const toggleFavorite = () => {
       flipFav();
@@ -44,6 +45,9 @@ return(
                 <Text style={styles.itemText}>{item.name}</Text>
                   <TouchableOpacity style = {styles.favoriteButton} onPress = {() => (toggleFavorite())}>
                     <Image style={styles.favoriteImage} source = {require('../../assets/likeLleno.png')}/>
+                  </TouchableOpacity>
+                  <TouchableOpacity style = {styles.favoriteButton} onPress = {() => (commentTab(item))}>
+                    <Image style={styles.favoriteImage} source = {require('../../assets/comment.png')}/>
                   </TouchableOpacity>
               </View>
             </TouchableOpacity>

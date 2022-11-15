@@ -6,6 +6,7 @@ const CharactersListFavorite = ({
     data,
     handleLoadMore,
     renderFooter,
+    commentTab,
     characterTab,
     flatList,
     takeFavourite
@@ -25,6 +26,7 @@ return(
             item = {item}
             characterTab = {characterTab}
             takeFavourite= {takeFavourite}
+            commentTab = {commentTab}
             ></CharacterInListFavorite>
           )}}
           keyExtractor={(item, index) => index.toString()}

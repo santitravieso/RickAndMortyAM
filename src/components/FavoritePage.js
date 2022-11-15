@@ -7,6 +7,7 @@ import { db } from '../../FirebaseConfig';
 import { ref, remove, onChildAdded, onChildRemoved } from "firebase/database";
 import CharactersListFavorite from './CharactersListFavorite';
 import CharacterViewModalFavorite from './CharacterViewModalFavorite';
+import CommentModalInput from './CommentModalInput';
 
 const logo = Image.resolveAssetSource(DefaultImage2).uri;
 const fondo = Image.resolveAssetSource(DefaultImage).uri;
@@ -20,6 +21,8 @@ const FavoritePage = () =>{
   const [isLoading, setisLoading] = useState(false)
   const [lastPage, setLastPage] = useState("")
   const [pageCurrent, setpageCurrent] = useState(1)
+  const [commentModal, setCommentModal]= useState(false)
+  const [characterIDComment, setCharacterIDComment] = useState([])
 
 
 
@@ -50,6 +53,16 @@ const FavoritePage = () =>{
     setCharacterOrigin(character.origin)
     }
 
+    const commentTab = (character) => {
+      setCommentModal(true)
+      setCharacterIDComment(character.id)
+    }
+    const addComment = (text) => {
+      /* set(ref(db, 'favourites/' + character.id),{
+         character: character
+       })*/
+       console.log(text)
+     }
     const renderFooter = () => {
       return (
         isLoading ?
@@ -70,6 +83,7 @@ const FavoritePage = () =>{
         data={data}
         handleLoadMore={handleLoadMore}
         renderFooter={renderFooter}
+        commentTab = {commentTab}
         characterTab={characterTab}
         takeFavourite= {takeFavourite}
         flatList={flatList}
@@ -81,7 +95,12 @@ const FavoritePage = () =>{
       origin={origin}
       location={location}
       setCharacterModal={setCharacterModal}/>
-      </View>
+      <CommentModalInput
+        addComment = {addComment}
+        setCommentModal = {setCommentModal}
+        commentModal = {commentModal}
+        />
+              </View>
       </ImageBackground>    
               </>
               </SafeAreaView>
