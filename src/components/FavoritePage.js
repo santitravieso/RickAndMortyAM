@@ -4,7 +4,7 @@ import styles from '../styles/HomePageStyles';
 import DefaultImage from '../../assets/fondo.jpg';
 import DefaultImage2 from '../../assets/logo.png';
 import { db } from '../../FirebaseConfig';
-import { ref, remove, onChildAdded, onChildRemoved } from "firebase/database";
+import {update, set, ref, remove, onChildAdded, onChildRemoved } from "firebase/database";
 import CharactersListFavorite from './CharactersListFavorite';
 import CharacterViewModalFavorite from './CharacterViewModalFavorite';
 import CommentModalInput from './CommentModalInput';
@@ -57,11 +57,11 @@ const FavoritePage = () =>{
       setCommentModal(true)
       setCharacterIDComment(character.id)
     }
-    const addComment = (text) => {
-      /* set(ref(db, 'favourites/' + character.id),{
-         character: character
-       })*/
-       console.log(text)
+    const addComment = (text, id) => {
+      update(ref(db, "favourites/"+id+"/character")
+      ,{
+         comment: text
+       })
      }
     const renderFooter = () => {
       return (
@@ -99,6 +99,7 @@ const FavoritePage = () =>{
         addComment = {addComment}
         setCommentModal = {setCommentModal}
         commentModal = {commentModal}
+        characterIDComment= {characterIDComment}
         />
               </View>
       </ImageBackground>    

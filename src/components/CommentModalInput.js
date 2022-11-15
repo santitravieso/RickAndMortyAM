@@ -8,6 +8,7 @@ const CommentModalInput =({
     addComment,
     setCommentModal,
     commentModal,
+    characterIDComment,
 
 } ) => {
 
@@ -18,10 +19,9 @@ const CommentModalInput =({
         setCommentModal(false);
     }
 
-    const insertComment = () =>{
+    const insertComment = (id) =>{
         setCommentModal(false);
-        addComment(text)
-        console.log(text);
+        addComment(text, id)
     }
 
 
@@ -37,7 +37,7 @@ const CommentModalInput =({
               />
           </View>
         <View> 
-         <TouchableOpacity onPress={() => {insertComment()}}> 
+         <TouchableOpacity onPress={() => {insertComment(characterIDComment)}}> 
             <Text style={styles2.butonsText} >Save Comment</Text> 
          </TouchableOpacity>
          <TouchableOpacity onPress={() => {cancelComment()}}>
