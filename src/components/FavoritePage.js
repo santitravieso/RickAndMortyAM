@@ -23,7 +23,7 @@ const FavoritePage = () =>{
   const [pageCurrent, setpageCurrent] = useState(1)
   const [commentModal, setCommentModal]= useState(false)
   const [characterIDComment, setCharacterIDComment] = useState([])
-
+  const [noFavs, setNoFavs] = useState(true)
 
 
 
@@ -39,6 +39,14 @@ const FavoritePage = () =>{
       setData(prevData => prevData.filter(element => element.id !== char.val().character.id))
     })
   }, [])
+  useEffect(() => {
+    if (data.length===0) {
+      setNoFavs(false)
+    } else {
+      console.log(data.length)
+      setNoFavs(true)}
+},[data])
+
 
   const handleLoadMore = () => {
     if(lastPage != null){
@@ -78,6 +86,15 @@ const FavoritePage = () =>{
     <>
     <ImageBackground source={{uri: fondo}} resizeMode="cover" style={styles.backgroundImage}>
     <Image source={{uri: logo}} style={styles.logo}></Image>
+
+    {!noFavs && (
+        <View style={styles.screen}>
+            <View backgroundColor='black'>
+            <Text style={{fontSize: 30, padding: 5, color: '#7FFF00', alignSelf: 'center', marginLeft: '5%'}}>No hay personajes favoritos</Text>
+          <Text  style={styles.screen}container>No hay personajes favoritos</Text>
+          </View>
+        </View>)}
+    {noFavs && (       
       <View style={styles.screen}>
       <CharactersListFavorite 
         data={data}
@@ -101,7 +118,8 @@ const FavoritePage = () =>{
         commentModal = {commentModal}
         characterIDComment= {characterIDComment}
         />
-              </View>
+              </View>  
+      )}
       </ImageBackground>    
               </>
               </SafeAreaView>
