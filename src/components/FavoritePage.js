@@ -43,7 +43,6 @@ const FavoritePage = () =>{
     if (data.length===0) {
       setNoFavs(false)
     } else {
-      console.log(data.length)
       setNoFavs(true)}
 },[data])
 
