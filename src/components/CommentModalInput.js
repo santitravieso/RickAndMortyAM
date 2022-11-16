@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, View, Image, Modal, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
 //import { TouchableOpacity } from 'react-native-web';
-import styles from '../styles/FiltersModalStyles';
+import styles from '../styles/CommentModalInputStyles';
 
 
 const CommentModalInput =({
@@ -27,8 +27,10 @@ const CommentModalInput =({
 
     return(
     <Modal transparent={true} visible={commentModal} animationType="slide">
+      <View style={styles.modalContainer}>
+        <View style={styles.modalCard}>
         <View style={styles.textInputFilters}>
-              <Text style={styles.filterTitle}> Comment:  </Text>
+              <Text style={styles.filterTitle}>  </Text>
               <TextInput style={styles.filterTextInputStyle}
                 placeholder= "Enter comment"
                 placeholderTextColor= '#7FFF00'
@@ -38,12 +40,14 @@ const CommentModalInput =({
           </View>
         <View> 
          <TouchableOpacity onPress={() => {insertComment(characterIDComment)}}> 
-            <Text style={styles2.butonsText} >Save Comment</Text> 
+            <Text style={styles.butonsText} >Save Comment</Text> 
          </TouchableOpacity>
          <TouchableOpacity onPress={() => {cancelComment()}}>
-            <Text style={styles2.butonsText} >Cancel</Text>
+            <Text style={styles.butonsText} >Cancel</Text>
         </TouchableOpacity>
         </View> 
+        </View>
+        </View>
 
     </Modal>
     )
@@ -51,24 +55,3 @@ const CommentModalInput =({
 
 export default CommentModalInput;
 
-const styles2 = StyleSheet.create({
-    butons: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      paddingVertical: 2,
-      paddingHorizontal: 3,
-      borderRadius: 4,
-      elevation: 3,
-      backgroundColor: 'black',
-      marginHorizontal: 3,
-      marginBottom:15,
-    },
-    butonsText: {
-      fontSize: 14,
-      lineHeight: 21,
-      fontWeight: 'bold',
-      letterSpacing: 0.25,
-      color: '#7FFF00',
-      alignContent: 'center',
-    }
-  });
