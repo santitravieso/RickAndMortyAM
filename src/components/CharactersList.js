@@ -10,7 +10,7 @@ const CharactersList = ({
     characterTab,
     flatList,
     addFavourite,
-    takeFavourite
+    takeFavourite,
 }) => {
 return(
     <View style={{flex:28}}>
@@ -25,6 +25,7 @@ return(
             characterTab = {characterTab}
             addFavourite= {addFavourite}
             takeFavourite= {takeFavourite}
+            data={data}
             ></CharacterInList>)
           }}
           keyExtractor={(item, index) => index.toString()}

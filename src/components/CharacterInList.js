@@ -11,14 +11,18 @@ const CharacterInList =({
     characterTab,
     addFavourite,
     takeFavourite,
+    data
 }) => {
     const [isFavorite, setIsFavorite] = useState(false);
-
+    
     useEffect(() => {
       const charactersRef = ref(db, 'favourites/');
+      setIsFavorite(false)
       onChildAdded(charactersRef, (char) => {
+         console.log(item)
           if (char.val().character.id==item.id){
               setIsFavorite(true);
+              console.log(item.name)
           }
       })
 
@@ -28,14 +32,12 @@ const CharacterInList =({
           }
       });console.log(isFavorite, item.id)
 
-  }, [])
+  }, [data])
     const toggleFavorite = () => {
       if(isFavorite == true){
-        setIsFavorite(false);
         takeFavourite(item)
         
       }else{
-        setIsFavorite(true);
         addFavourite(item);
       }
     }
