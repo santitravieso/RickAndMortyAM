@@ -45,6 +45,7 @@ const HomePage = () =>{
     }
   }, [pageCurrent])
   const getFiltertData =async () => {
+    console.log('aca', apiURL)
     fetch(apiURL)
       .then(res => res.json())
       .then(res => {
@@ -62,6 +63,7 @@ const HomePage = () =>{
         );
   }
   const getData =async () => {
+    console.log('el otro', apiURL)
     fetch(apiURL)
       .then(res => res.json())
       .then(res => {
@@ -117,12 +119,8 @@ const characterTab = (character) =>{
   }
 
 const addFavourite=(character) => {
-  let chardb=JSON.stringify(character);
-  chardb=chardb.slice(0,-1);
-  chardb = chardb + ",\"comment\":\"\"}";
-  const jsoncharacter= JSON.parse(chardb);
   set(ref(db, 'favourites/' + character.id),{
-    character: jsoncharacter
+    character: character
   })
   .then(() => {
     // Data saved successfully!
@@ -161,7 +159,8 @@ const takeFavourite=(character) =>{
         characterTab={characterTab}
         addFavourite= {addFavourite}
         takeFavourite= {takeFavourite}
-        flatList={flatList}/>
+        flatList={flatList}
+        />
 
       <FiltersModal
         showModal={showModal}
