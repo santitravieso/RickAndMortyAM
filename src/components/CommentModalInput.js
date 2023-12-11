@@ -14,14 +14,18 @@ const CommentModalInput =({
 
     const[text, setText] = useState('');
 
-    const cancelComment= () =>{
+    const cancelComment= (id) =>{
         setText('');
         setCommentModal(false);
+        addComment('', id)
     }
 
     const insertComment = (id) =>{
         setCommentModal(false);
         addComment(text, id)
+    }
+    const closeModal = () =>{
+        setCommentModal(false);
     }
 
 
@@ -38,12 +42,15 @@ const CommentModalInput =({
                 onChangeText={setText}
               />
           </View>
-        <View> 
+        <View style={styles.commentButtons}> 
          <TouchableOpacity onPress={() => {insertComment(characterIDComment)}}> 
-            <Text style={styles.butonsText} >Save Comment</Text> 
+            <Text style={styles.butonsText} >Save</Text> 
          </TouchableOpacity>
-         <TouchableOpacity onPress={() => {cancelComment()}}>
-            <Text style={styles.butonsText} >Cancel</Text>
+         <TouchableOpacity onPress={() => {cancelComment(characterIDComment)}}>
+            <Text style={styles.butonsText} >Delete</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => {closeModal()}}>
+            <Text style={styles.butonsText} >Close</Text>
         </TouchableOpacity>
         </View> 
         </View>

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Animated, Easing} from 'react-native';
+import { Text, View, Image, TouchableOpacity, Animated, Easing} from 'react-native';
 import styles from '../styles/CharacterInListStyles';
 import {ref, set, remove, onChildAdded, onChildRemoved } from "firebase/database";
 import { db } from '../../FirebaseConfig';
@@ -19,10 +19,8 @@ const CharacterInList =({
       const charactersRef = ref(db, 'favourites/');
       setIsFavorite(false)
       onChildAdded(charactersRef, (char) => {
-         console.log(item)
           if (char.val().character.id==item.id){
               setIsFavorite(true);
-              console.log(item.name)
           }
       })
 
@@ -30,7 +28,7 @@ const CharacterInList =({
           if (char.val().character.id==item.id){
               setIsFavorite(false);
           }
-      });console.log(isFavorite, item.id)
+      });console.log("3",isFavorite, item.id)
 
   }, [data])
     const toggleFavorite = () => {

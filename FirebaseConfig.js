@@ -7,13 +7,13 @@ import { getDatabase } from "firebase/database";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAqkbHfEpH2V-eeSEVgsmqNdFr8Zb8LUVg",
-  authDomain: "rickandmortyam.firebaseapp.com",
-  projectId: "rickandmortyam",
-  storageBucket: "rickandmortyam.appspot.com",
-  messagingSenderId: "1010287067392",
-  appId: "1:1010287067392:web:6e87cac095c58b043033e5",
-  databaseURL: "https://rickandmortyam-default-rtdb.firebaseio.com/"
+  apiKey: "AIzaSyAae5Z1GjqiRHr8at_2CykBUOxzrECKx-w",
+  authDomain: "rickandmorty-1.firebaseapp.com",
+  databaseURL: "https://rickandmorty-1-default-rtdb.firebaseio.com",
+  projectId: "rickandmorty-1",
+  storageBucket: "rickandmorty-1.appspot.com",
+  messagingSenderId: "701322917137",
+  appId: "1:701322917137:web:6284c31c3c1527e3e7c8b0"
 };
 
 // Initialize Firebase

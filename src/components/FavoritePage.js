@@ -4,7 +4,7 @@ import styles from '../styles/HomePageStyles';
 import DefaultImage from '../../assets/fondo.jpg';
 import DefaultImage2 from '../../assets/logo.png';
 import { db } from '../../FirebaseConfig';
-import {update, set, ref, remove, onChildAdded, onChildRemoved } from "firebase/database";
+import {update, ref, remove, onChildAdded, onChildRemoved } from "firebase/database";
 import CharactersListFavorite from './CharactersListFavorite';
 import CharacterViewModalFavorite from './CharacterViewModalFavorite';
 import CommentModalInput from './CommentModalInput';

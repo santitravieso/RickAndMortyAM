@@ -10,6 +10,9 @@ import BusquedaVaciaModal from './BusquedaVaciaModal';
 import CharacterViewModal from './CharacterViewModal';
 import {ref, set, remove } from "firebase/database";
 import { db } from '../../FirebaseConfig';
+import { connect } from 'react-redux';
+import { apiReducer } from './redux/reducers/apiReducer';
+import { logApiPending, logApiSuccess } from './redux/actions/apiActions';
 
 
 const logo = Image.resolveAssetSource(DefaultImage2).uri;

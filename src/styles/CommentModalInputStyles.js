@@ -108,13 +108,20 @@ const styles = StyleSheet.create({
             marginBottom:15,
           },
           butonsText: {
-            fontSize: 14,
+            fontSize: 20,
             lineHeight: 21,
             fontWeight: 'bold',
             letterSpacing: 0.25,
             color: '#7FFF00',
-            marginBottom: '5%',
+            marginBottom: '10%',
             alignContent: 'center',
+            padding: 15
+          },
+          commentButtons: {
+            flexDirection: 'row',
+            marginBottom: '10%',
+            flex: 0.5,
+            
           },
         
 

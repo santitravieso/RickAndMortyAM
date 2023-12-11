@@ -6,11 +6,11 @@ import {update, set, ref, remove, onChildAdded, onChildRemoved, onValue } from "
 
 
 const readComment = (id) =>{
-  console.log(id);
+  console.log("22222",id);
   const refBD = ref(db, 'favourites/'+ id + '/character/comment');
   onValue(refBD, (snapshot) => {
     const comment = snapshot.val();
-    console.log(comment);
+    console.log("111111",comment);
     return comment;
   })}
 

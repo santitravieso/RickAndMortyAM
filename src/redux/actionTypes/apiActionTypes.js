@@ -1,0 +1,2 @@
+export const LOG_API_PENDING = "LOG_API_PENDING";
+export const LOG_API_SUCCESS = "LOG_API_SUCCESS";
