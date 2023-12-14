@@ -10,16 +10,15 @@ import BusquedaVaciaModal from './BusquedaVaciaModal';
 import CharacterViewModal from './CharacterViewModal';
 import {ref, set, remove } from "firebase/database";
 import { db } from '../../FirebaseConfig';
-import { connect } from 'react-redux';
-import { apiReducer } from './redux/reducers/apiReducer';
-import { logApiPending, logApiSuccess } from './redux/actions/apiActions';
+import { useSelector ,useDispatch} from 'react-redux';
+import { setLastPage, setStatus, setCharacterModalItem, setCharacterLocation, setCharacterOrigin, setType, setSpecies, setGender, setCharacterModal,setData, setisLoading, setfilterSucces, setSearch, setShowModal, setpageCurrent} from '../store/Reducers';
 
 
 const logo = Image.resolveAssetSource(DefaultImage2).uri;
 const fondo = Image.resolveAssetSource(DefaultImage).uri;
 
 const HomePage = () =>{
-  const [data, setData] = useState([])
+  /*const [data, setData] = useState([])
   const [isLoading, setisLoading] = useState(false)
   const [pageCurrent, setpageCurrent] = useState(1)
   const [search, setSearch] = useState("")
@@ -34,12 +33,12 @@ const HomePage = () =>{
   const [characterModal, setCharacterModal] = useState(false)
   const [characterModalItem, setCharacterModalItem] = useState([])
   const [origin, setCharacterOrigin] = useState([])
-  const [location, setCharacterLocation] = useState([])
-
- const apiURL = "https://rickandmortyapi.com/api/character/?page="+pageCurrent+"&name="+search+"&status="+status+"&species="+species+"&type="+type+"&gender="+gender
- const flatList = useRef();
- const moveToTop = () => flatList.current.scrollToIndex({ index: 0 });
-
+  const [location, setCharacterLocation] = useState([])*/
+  const {data,isLoading, pageCurrent, lastPage, characterModal, search, showModal ,status, filterSucces, characterModalItem, species, type, origin, gender, location}  = useSelector(state => state.application);
+  const apiURL = "https://rickandmortyapi.com/api/character/?page="+pageCurrent+"&name="+search+"&status="+status+"&species="+species+"&type="+type+"&gender="+gender
+  const flatList = useRef();
+  const moveToTop = () => flatList.current.scrollToIndex({ index: 0 });
+  const dispatch = useDispatch(); 
   useEffect(() => {
     setisLoading(true)
     getData()
@@ -48,35 +47,33 @@ const HomePage = () =>{
     }
   }, [pageCurrent])
   const getFiltertData =async () => {
-    console.log('aca', apiURL)
     fetch(apiURL)
       .then(res => res.json())
       .then(res => {
         if(res.results !=undefined){
-        setLastPage(res.info.next)
-        setData(res.results)
-        setisLoading(false)
+        dispatch(setLastPage(res.info.next))
+        dispatch(setData(res.results))
+        dispatch(setisLoading(false))
       }
       else {
-        if(pageCurrent=1){
-        setfilterSucces(true)
-        clearFilters()
+        if(pageCurrent==1){
+          clearFilters()
+          dispatch(setfilterSucces(true))
       }}
     }
         );
   }
   const getData =async () => {
-    console.log('el otro', apiURL)
     fetch(apiURL)
       .then(res => res.json())
       .then(res => {
         if(res.results !=undefined){
-          setLastPage(res.info.next)
-          setData(data.concat(res.results))
-          setisLoading(false)
+          dispatch(setLastPage(res.info.next))
+          dispatch(setData(data.concat(res.results)))
+          dispatch(setisLoading(false))
         } else {
-          setfilterSucces(true)
-          clearFilters()
+          dispatch(setfilterSucces(true))
+          dispatch(clearFilters())
         }
       }
           );
@@ -90,35 +87,35 @@ const HomePage = () =>{
   }
   const handleLoadMore = () => {
     if(lastPage != null){
-    setpageCurrent(pageCurrent + 1)
-    setisLoading(true)
+      dispatch(setpageCurrent(pageCurrent + 1))
+      dispatch(setisLoading(true))
   } }
 
 
   const handleChange = (text) =>{
-    setpageCurrent(1)
-    setSearch(text)
+    dispatch(setpageCurrent(1))
+    dispatch(setSearch(text))
   }
   const rerender = () =>{
-    setpageCurrent(1)
+    dispatch(setpageCurrent(1))
     moveToTop()
     getFiltertData()
   }
   const clearFilters = () =>{
-    setSearch("")
+    dispatch(setSearch(""))
     clearModalFilters()
 }
 const clearModalFilters = () =>{
-  setStatus("")
-  setSpecies("")
-  setType("")
-  setGender("")
+  dispatch(setStatus(""))
+  dispatch(setSpecies(""))
+  dispatch(setType(""))
+  dispatch(setGender(""))
 }
 const characterTab = (character) =>{
-  setCharacterModal(true)
-  setCharacterModalItem(character)
-  setCharacterLocation(character.location)
-  setCharacterOrigin(character.origin)
+  dispatch(setCharacterModal(true))
+  dispatch(setCharacterModalItem(character))
+  dispatch(setCharacterLocation(character.location))
+  dispatch(setCharacterOrigin(character.origin))
   }
 
 const addFavourite=(character) => {
@@ -148,7 +145,7 @@ const takeFavourite=(character) =>{
         placeholderTextColor= '#7FFF00'
         value={search}
         onChangeText={(text) => {
-        handleChange(text); setpageCurrent(1)}
+        handleChange(text); dispatch(setpageCurrent(1))}
         }/>
       <FilterButtons
         rerender={rerender}
@@ -176,10 +173,7 @@ const takeFavourite=(character) =>{
         rerender={rerender}
         setShowModal={setShowModal}
         setpageCurrent={setpageCurrent}/>
-      <BusquedaVaciaModal
-        filterSucces={filterSucces}
-        setfilterSucces={setfilterSucces}
-        rerender={rerender}/>
+      <BusquedaVaciaModal/>
       <CharacterViewModal
       characterModal={characterModal}
       characterModalItem={characterModalItem}

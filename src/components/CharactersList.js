@@ -1,17 +1,20 @@
 import React, {useRef} from 'react';
 import { StyleSheet, View, FlatList} from 'react-native';
 import CharacterInList from './CharacterInList';
-
+import { useSelector,useDispatch } from 'react-redux';
+import { setCharacterModal} from '../store/Reducers';
 
 const CharactersList = ({
-    data,
+    //data,
     handleLoadMore,
     renderFooter,
     characterTab,
     flatList,
     addFavourite,
     takeFavourite,
+
 }) => {
+  const {data}  = useSelector(state => state.application);
 return(
     <View style={{flex:28}}>
       <FlatList
@@ -25,13 +28,12 @@ return(
             characterTab = {characterTab}
             addFavourite= {addFavourite}
             takeFavourite= {takeFavourite}
-            data={data}
             ></CharacterInList>)
           }}
           keyExtractor={(item, index) => index.toString()}
           ListFooterComponent={renderFooter}
           onEndReached={handleLoadMore}
-          onEndReachedThreshold={0.2} 
+          onEndReachedThreshold={2.5} 
       />
       </View>
       

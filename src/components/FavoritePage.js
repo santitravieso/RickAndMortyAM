@@ -4,65 +4,86 @@ import styles from '../styles/HomePageStyles';
 import DefaultImage from '../../assets/fondo.jpg';
 import DefaultImage2 from '../../assets/logo.png';
 import { db } from '../../FirebaseConfig';
-import {update, ref, remove, onChildAdded, onChildRemoved } from "firebase/database";
+import {update, ref, get, remove, onChildAdded, onChildRemoved } from "firebase/database";
 import CharactersListFavorite from './CharactersListFavorite';
 import CharacterViewModalFavorite from './CharacterViewModalFavorite';
 import CommentModalInput from './CommentModalInput';
-
+import { setFavs,setisLoading,setCharacterComment,setCharacterModal,setCharacterModalItem, setCharacterLocation, setCharacterOrigin } from '../store/Reducers';
+import { useDispatch, useSelector } from 'react-redux';
 const logo = Image.resolveAssetSource(DefaultImage2).uri;
 const fondo = Image.resolveAssetSource(DefaultImage).uri;
 
 const FavoritePage = () =>{
-  const [data, setData] = useState([]);
+  /*const [data, setData] = useState([]);
   const [characterModal, setCharacterModal] = useState(false)
   const [characterModalItem, setCharacterModalItem] = useState([])
   const [origin, setCharacterOrigin] = useState([])
   const [location, setCharacterLocation] = useState([])
   const [isLoading, setisLoading] = useState(false)
   const [lastPage, setLastPage] = useState("")
-  const [pageCurrent, setpageCurrent] = useState(1)
+  const [pageCurrent, setpageCurrent] = useState(1)*/
   const [commentModal, setCommentModal]= useState(false)
   const [characterIDComment, setCharacterIDComment] = useState([])
   const [noFavs, setNoFavs] = useState(true)
 
-
+  const dispatch = useDispatch(); 
+  const { favs,comment, characterModal, characterModalItem, origin, location, isLoading, lastPage, pageCurrent }  = useSelector(state => state.application); 
 
   const flatList = useRef();
 
   useEffect(() => {
-    setisLoading(true)
+    dispatch(setisLoading(true))
     onChildAdded(ref(db, 'favourites/'), (char) =>{
-      setData(prevData => [...prevData, char.val().character])
+      //dispatch(setData(prevData => [...prevData, char.val().character]))
+      getCharactersFromFavs()
     })
 
     onChildRemoved(ref(db, 'favourites/'), (char) =>{
-      setData(prevData => prevData.filter(element => element.id !== char.val().character.id))
+      //dispatch(setData(prevData => prevData.filter(element => element.id !== char.val().character.id)))
+      getCharactersFromFavs()
     })
+    getCharactersFromFavs()
   }, [])
   useEffect(() => {
-    if (data.length===0) {
+    if (favs.length===0) {
       setNoFavs(false)
     } else {
-      setNoFavs(true)}
-},[data])
+    setNoFavs(true)}
+},[favs])
+  const getCharactersFromFavs = () => {
+    const aux = []
+    get(ref(db,'favourites')).then((snapshot) => {
+      if (snapshot.exists()) {
+          snapshot.forEach((groupSnapshot) => {aux.push(JSON.parse(JSON.stringify(groupSnapshot)))}) //limpia lo recibido de la bd para convertirlo en json
+          dispatch(setFavs(aux))
+      } else {
+          console.log("No data available");
+          dispatch(setFavs([]))
+      }
+      }).catch((error) => {
+          console.error(error);
+      });     
+  };
 
 
   const handleLoadMore = () => {
-    if(lastPage != null){
-    setpageCurrent(pageCurrent + 1)
-    setisLoading(true)
-  } }
+    /*if(lastPage != null){
+    dispatch(setpageCurrent(pageCurrent + 1))
+    dispatch(setisLoading(true))
+  }*/ }
 
   const characterTab = (character) =>{
-    setCharacterModal(true)
-    setCharacterModalItem(character)
-    setCharacterLocation(character.location)
-    setCharacterOrigin(character.origin)
+    console.log("aca")
+    dispatch(setCharacterModal(true))
+    dispatch(setCharacterModalItem(character))
+    dispatch(setCharacterLocation(character.location))
+    dispatch(setCharacterOrigin(character.origin))
+    dispatch(setCharacterComment(character.comment))
     }
 
     const commentTab = (character) => {
-      setCommentModal(true)
       setCharacterIDComment(character.id)
+      setCommentModal(true)
     }
     const addComment = (text, id) => {
       update(ref(db, "favourites/"+id+"/character")
@@ -96,8 +117,6 @@ const FavoritePage = () =>{
     {noFavs && (       
       <View style={styles.screen}>
       <CharactersListFavorite 
-        data={data}
-        handleLoadMore={handleLoadMore}
         renderFooter={renderFooter}
         commentTab = {commentTab}
         characterTab={characterTab}
@@ -105,12 +124,7 @@ const FavoritePage = () =>{
         flatList={flatList}
         />
 
-      <CharacterViewModalFavorite
-      characterModal={characterModal}
-      characterModalItem={characterModalItem}
-      origin={origin}
-      location={location}
-      setCharacterModal={setCharacterModal}/>
+      <CharacterViewModalFavorite/>
       <CommentModalInput
         addComment = {addComment}
         setCommentModal = {setCommentModal}

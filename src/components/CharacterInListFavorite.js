@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Animated, Easing} from 'react-native';
+import { Text, View, Image, TouchableOpacity, Animated, Easing} from 'react-native';
 import styles from '../styles/CharacterInListStyles';
-
 const CharacterInListFavorite =({
     item,
     characterTab,
     takeFavourite,
     commentTab,
 }) => {
+    item=item.character
     const toggleFavorite = () => {
       flipFav();
       //takeFavourite(item);

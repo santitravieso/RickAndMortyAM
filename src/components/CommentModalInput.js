@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Text, View, Image, Modal, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
 //import { TouchableOpacity } from 'react-native-web';
 import styles from '../styles/CommentModalInputStyles';
-
+import { setCharacterComment } from '../store/Reducers';
+import { useDispatch, useSelector } from 'react-redux';
 
 const CommentModalInput =({
     addComment,
@@ -11,7 +12,8 @@ const CommentModalInput =({
     characterIDComment,
 
 } ) => {
-
+    const {}  = useSelector(state => state.application);
+    const dispatch = useDispatch();
     const[text, setText] = useState('');
 
     const cancelComment= (id) =>{
@@ -23,6 +25,7 @@ const CommentModalInput =({
     const insertComment = (id) =>{
         setCommentModal(false);
         addComment(text, id)
+        dispatch(setCharacterComment(text))
     }
     const closeModal = () =>{
         setCommentModal(false);

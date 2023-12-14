@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Text, View, Image, TouchableOpacity, Animated, Easing} from 'react-native';
 import styles from '../styles/CharacterInListStyles';
-import {ref, set, remove, onChildAdded, onChildRemoved } from "firebase/database";
+import {ref, onChildAdded, onChildRemoved } from "firebase/database";
 import { db } from '../../FirebaseConfig';
-
+import { useSelector} from 'react-redux';
 
 
 const CharacterInList =({
@@ -11,10 +11,9 @@ const CharacterInList =({
     characterTab,
     addFavourite,
     takeFavourite,
-    data
 }) => {
     const [isFavorite, setIsFavorite] = useState(false);
-    
+    const { data }  = useSelector(state => state.application);
     useEffect(() => {
       const charactersRef = ref(db, 'favourites/');
       setIsFavorite(false)
@@ -28,7 +27,7 @@ const CharacterInList =({
           if (char.val().character.id==item.id){
               setIsFavorite(false);
           }
-      });console.log("3",isFavorite, item.id)
+      });console.log(item.id) //////////////////////////borrarr log
 
   }, [data])
     const toggleFavorite = () => {
@@ -73,7 +72,7 @@ const CharacterInList =({
         <Animated.View style={{...fliptStyle  }}>
         <View style={styles.itemRow}>
           <TouchableOpacity onPress={() => characterTab(item)}>
-            <Image style={styles.itemImage} source={{uri: item.image}} />
+          <Image style={styles.itemImage} source={{uri: item.image}} />
             <View style={{flexDirection:"row"}}>
               <Text style={styles.itemText}>{item.name}</Text>
               {!isFavorite && (

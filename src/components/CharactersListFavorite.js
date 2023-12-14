@@ -1,16 +1,15 @@
 import React, {useRef} from 'react';
 import { StyleSheet, View, FlatList, Text} from 'react-native';
 import CharacterInListFavorite from './CharacterInListFavorite';
-
+import { useSelector } from 'react-redux';
 const CharactersListFavorite = ({
-    data,
-    handleLoadMore,
     renderFooter,
     commentTab,
     characterTab,
     flatList,
     takeFavourite
 }) => {
+  const { favs }  = useSelector(state => state.application);
 return(
     <View style={{flex:28}}>
       <View style={{backgroundColor: 'black'}}>
@@ -19,7 +18,7 @@ return(
       <FlatList
           ref={flatList}
           style={styles.container}
-          data={data}
+          data={favs}
           renderItem= {({ item}) => {
             return (
             <CharacterInListFavorite
@@ -31,7 +30,6 @@ return(
           )}}
           keyExtractor={(item, index) => index.toString()}
           ListFooterComponent={renderFooter}
-          onEndReached={handleLoadMore}
           onEndReachedThreshold={0.2} 
       />
       </View>

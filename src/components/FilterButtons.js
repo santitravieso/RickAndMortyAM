@@ -1,21 +1,22 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-
+import { useSelector ,useDispatch} from 'react-redux';
+import { setShowModal} from '../store/Reducers';
 const FilterButtons =({
     rerender,
-    setShowModal,
     clearModalFilters,
     clearFilters
 }) => {
+  const dispatch = useDispatch(); 
     return(
         <View style={{flexDirection:"row", flex: 2}}> 
         <TouchableOpacity style={styles.butons} onPress={() => rerender()}>
             <Text style={styles.butonsText}> Apply </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.butons} onPress={() => {setShowModal(true); clearModalFilters()}}>
+        <TouchableOpacity style={styles.butons} onPress={() => {dispatch(setShowModal(true)); clearModalFilters()}}>
             <Text style={styles.butonsText}> More Filters </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.butons} onPress={() => clearFilters()}>
+        <TouchableOpacity style={styles.butons} onPress={() => {clearFilters(); rerender()}}>
             <Text style={styles.butonsText}> Clear Filters </Text>
         </TouchableOpacity>
       </View>
