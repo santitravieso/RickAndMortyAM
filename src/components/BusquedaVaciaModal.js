@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Modal} from 'react-native';
+import { Text, View, Modal} from 'react-native';
 import styles from '../styles/BusquedaVaciaModalStyles';
 import { useSelector ,useDispatch} from 'react-redux';
 import { setfilterSucces} from '../store/Reducers';

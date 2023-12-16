@@ -4,7 +4,7 @@ import styles from '../styles/HomePageStyles';
 import DefaultImage from '../../assets/fondo.jpg';
 import DefaultImage2 from '../../assets/logo.png';
 import { db } from '../../FirebaseConfig';
-import {update, ref, get, remove, onChildAdded, onChildRemoved } from "firebase/database";
+import {update, ref, get, remove, onChildAdded, onChildRemoved, onValue } from "firebase/database";
 import CharactersListFavorite from './CharactersListFavorite';
 import CharacterViewModalFavorite from './CharacterViewModalFavorite';
 import CommentModalInput from './CommentModalInput';
@@ -14,20 +14,13 @@ const logo = Image.resolveAssetSource(DefaultImage2).uri;
 const fondo = Image.resolveAssetSource(DefaultImage).uri;
 
 const FavoritePage = () =>{
-  /*const [data, setData] = useState([]);
-  const [characterModal, setCharacterModal] = useState(false)
-  const [characterModalItem, setCharacterModalItem] = useState([])
-  const [origin, setCharacterOrigin] = useState([])
-  const [location, setCharacterLocation] = useState([])
-  const [isLoading, setisLoading] = useState(false)
-  const [lastPage, setLastPage] = useState("")
-  const [pageCurrent, setpageCurrent] = useState(1)*/
   const [commentModal, setCommentModal]= useState(false)
   const [characterIDComment, setCharacterIDComment] = useState([])
   const [noFavs, setNoFavs] = useState(true)
+  const [comentario, setcomentario] = useState("")
 
   const dispatch = useDispatch(); 
-  const { favs,comment, characterModal, characterModalItem, origin, location, isLoading, lastPage, pageCurrent }  = useSelector(state => state.application); 
+  const { favs, isLoading }  = useSelector(state => state.application); 
 
   const flatList = useRef();
 
@@ -54,7 +47,7 @@ const FavoritePage = () =>{
     const aux = []
     get(ref(db,'favourites')).then((snapshot) => {
       if (snapshot.exists()) {
-          snapshot.forEach((groupSnapshot) => {aux.push(JSON.parse(JSON.stringify(groupSnapshot)))}) //limpia lo recibido de la bd para convertirlo en json
+          snapshot.forEach((groupSnapshot) => {aux.push(JSON.parse(JSON.stringify(groupSnapshot)))}) 
           dispatch(setFavs(aux))
       } else {
           console.log("No data available");
@@ -65,20 +58,18 @@ const FavoritePage = () =>{
       });     
   };
 
-
-  const handleLoadMore = () => {
-    /*if(lastPage != null){
-    dispatch(setpageCurrent(pageCurrent + 1))
-    dispatch(setisLoading(true))
-  }*/ }
-
+  const getComment = (id) =>{
+    console.log("22222",id);
+    const refBD = ref(db, 'favourites/'+ id + '/character/comment');
+    onValue(refBD, (snapshot) => {
+      dispatch(setCharacterComment(snapshot.val()))
+    })}
   const characterTab = (character) =>{
-    console.log("aca")
     dispatch(setCharacterModal(true))
     dispatch(setCharacterModalItem(character))
     dispatch(setCharacterLocation(character.location))
     dispatch(setCharacterOrigin(character.origin))
-    dispatch(setCharacterComment(character.comment))
+    setcomentario(getComment(character.id))
     }
 
     const commentTab = (character) => {

@@ -1,11 +1,10 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import { StyleSheet, View, FlatList} from 'react-native';
 import CharacterInList from './CharacterInList';
-import { useSelector,useDispatch } from 'react-redux';
-import { setCharacterModal} from '../store/Reducers';
+import { useSelector } from 'react-redux';
+
 
 const CharactersList = ({
-    //data,
     handleLoadMore,
     renderFooter,
     characterTab,

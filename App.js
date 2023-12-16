@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { Image } from 'react-native';
 import HomePage from './src/components/HomePage.js';
 import FavoritePage from  './src/components/FavoritePage';

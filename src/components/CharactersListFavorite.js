@@ -1,7 +1,11 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import { StyleSheet, View, FlatList, Text} from 'react-native';
 import CharacterInListFavorite from './CharacterInListFavorite';
 import { useSelector } from 'react-redux';
+
+
+
+
 const CharactersListFavorite = ({
     renderFooter,
     commentTab,

@@ -27,7 +27,7 @@ const CharacterInList =({
           if (char.val().character.id==item.id){
               setIsFavorite(false);
           }
-      });console.log(item.id) //////////////////////////borrarr log
+      });
 
   }, [data])
     const toggleFavorite = () => {

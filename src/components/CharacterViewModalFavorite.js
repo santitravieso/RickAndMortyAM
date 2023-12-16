@@ -1,28 +1,13 @@
 import React from 'react';
 import { Text, View, Image, Modal} from 'react-native';
 import styles from '../styles/CharacterViewModalStyles';
-import { db } from '../../FirebaseConfig';
-import {update, set, ref, remove, onChildAdded, onChildRemoved, onValue } from "firebase/database";
 import { useSelector,useDispatch } from 'react-redux';
 import { setCharacterModal} from '../store/Reducers';
-
-const readComment = (id) =>{
-  console.log("22222",id);
-  const refBD = ref(db, 'favourites/'+ id + '/character/comment');
-  onValue(refBD, (snapshot) => {
-    const comment = snapshot.val();
-    console.log("111111",comment);
-    return comment;
-  })}
+  
 
 
   
   const CharacterViewModalFavorite =({
-    /*characterModal,
-    characterModalItem,
-    origin,
-    location,
-    setCharacterModal*/
 }) => {
     const {characterModal,characterModalItem, origin, location, comment}  = useSelector(state => state.application);
     const dispatch = useDispatch();

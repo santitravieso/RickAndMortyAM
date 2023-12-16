@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, Image, Modal, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
-//import { TouchableOpacity } from 'react-native-web';
+import { Text, View, Modal, TextInput, TouchableOpacity} from 'react-native';
 import styles from '../styles/CommentModalInputStyles';
 import { setCharacterComment } from '../store/Reducers';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,6 +25,7 @@ const CommentModalInput =({
         setCommentModal(false);
         addComment(text, id)
         dispatch(setCharacterComment(text))
+        setText('');
     }
     const closeModal = () =>{
         setCommentModal(false);

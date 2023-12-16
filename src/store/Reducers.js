@@ -13,7 +13,6 @@ export const Reducers = createSlice({
         filterSucces:false,
         species:"",
         type:"",
-        // const [character, setCharacter]= useState({});
         gender:"",
         characterModal:false,
         characterModalItem:[],

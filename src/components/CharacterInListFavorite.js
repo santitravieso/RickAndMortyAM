@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Text, View, Image, TouchableOpacity, Animated, Easing} from 'react-native';
+import React, { useRef} from 'react';
+import { Text, View, Image, TouchableOpacity, Animated} from 'react-native';
 import styles from '../styles/CharacterInListStyles';
 const CharacterInListFavorite =({
     item,
@@ -10,7 +10,6 @@ const CharacterInListFavorite =({
     item=item.character
     const toggleFavorite = () => {
       flipFav();
-      //takeFavourite(item);
 }
 const flipAnimation = useRef( new Animated.Value( 0 ) ).current;
     let flipRotation = 0;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import { useSelector ,useDispatch} from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { setShowModal} from '../store/Reducers';
 const FilterButtons =({
     rerender,
@@ -9,7 +9,7 @@ const FilterButtons =({
 }) => {
   const dispatch = useDispatch(); 
     return(
-        <View style={{flexDirection:"row", flex: 2}}> 
+        <View style={styles.butonsContainer}> 
         <TouchableOpacity style={styles.butons} onPress={() => rerender()}>
             <Text style={styles.butonsText}> Apply </Text>
         </TouchableOpacity>
@@ -44,5 +44,10 @@ const styles = StyleSheet.create({
       letterSpacing: 0.25,
       color: '#7FFF00',
       alignContent: 'center',
+    },
+    butonsContainer:{
+      flexDirection:"row", 
+      flex: 2,
+      alignSelf: 'center',
     }
   });

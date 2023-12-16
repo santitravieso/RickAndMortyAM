@@ -1,4 +1,4 @@
-import React,{useState, useEffect, useRef} from 'react';
+import React,{useEffect, useRef} from 'react';
 import { View, ActivityIndicator, Image, TextInput, SafeAreaView, ImageBackground } from 'react-native';
 import styles from '../styles/HomePageStyles';
 import DefaultImage from '../../assets/fondo.jpg';
@@ -18,22 +18,7 @@ const logo = Image.resolveAssetSource(DefaultImage2).uri;
 const fondo = Image.resolveAssetSource(DefaultImage).uri;
 
 const HomePage = () =>{
-  /*const [data, setData] = useState([])
-  const [isLoading, setisLoading] = useState(false)
-  const [pageCurrent, setpageCurrent] = useState(1)
-  const [search, setSearch] = useState("")
-  const [lastPage, setLastPage] = useState("")
-  const [showModal, setShowModal] = useState(false);
-  const [status, setStatus]= useState("");
-  const [filterSucces, setfilterSucces]= useState(false);
-  const [species, setSpecies] = useState("")
-  const [type, setType] = useState("")
- // const [character, setCharacter]= useState({});
-  const [gender, setGender] = useState("")
-  const [characterModal, setCharacterModal] = useState(false)
-  const [characterModalItem, setCharacterModalItem] = useState([])
-  const [origin, setCharacterOrigin] = useState([])
-  const [location, setCharacterLocation] = useState([])*/
+  
   const {data,isLoading, pageCurrent, lastPage, characterModal, search, showModal ,status, filterSucces, characterModalItem, species, type, origin, gender, location}  = useSelector(state => state.application);
   const apiURL = "https://rickandmortyapi.com/api/character/?page="+pageCurrent+"&name="+search+"&status="+status+"&species="+species+"&type="+type+"&gender="+gender
   const flatList = useRef();
@@ -42,7 +27,6 @@ const HomePage = () =>{
   useEffect(() => {
     setisLoading(true)
     getData()
-    //getSearch()
     return () => {
     }
   }, [pageCurrent])
